@@ -9,6 +9,7 @@ var Pig = function() {
 Pig.prototype = new Die(); 
 
 Pig.prototype.takeTurn = function() {
+    console.log('pig takeTurn called!');
     // use inherited method to roll the die
     this.roll = this.rollDie(); // use inherited method to roll the die
     

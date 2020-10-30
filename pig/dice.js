@@ -2,10 +2,11 @@
 var $ = function(id) { return document.getElementById(id); };
 
 var newGame = function() {
-    
+    console.log(game.isValid());
+    game.setInitialPlayer();
 };
 var takeTurn = function() {
-    
+    game.takeTurn();
 };
 var holdTurn = function() {
   

@@ -34,14 +34,42 @@ var game = {
         // reset player2 score value and reset its Pig object
     },
     setInitialPlayer: function() {
+        if(game.isValid()) {
+            document.getElementById("current").innerHTML = document.getElementById("player1").value;
+            this.currentPlayer = this.player1;
+            game.changePlayer();
+        }
         // if game is valid set initial player by calling the changePlayer method
     },
     takeTurn: function() {
+        console.log('game takeTurn called');
+        game.currentPlayer.pig.takeTurn();
+        
         // use the Pig object of the currentPlayer property to take a turn
     },
     changePlayer: function() {
+        console.log('changPlayer called');
+        console.log(game.currentPlayer.pig);
+        console.log(game.currentPlayer.pig.roll);
+        console.log(game.player1.name.value);
+        console.log(game);
+        console.log(this.currentPlayer.pig);
+        takeTurn();
+        document.getElementById('die').value = game.currentPlayer.pig.roll;
+        console.log(this.currentPlayer.name.value);
         // display result of last roll in the currentPlayer display properties
-        
+        if (game.currentPlayer.pig.roll == 1 && this.currentPlayer === this.player1) {
+            this.currentPlayer = this.player2;
+            document.getElementById("current").innerHTML = document.getElementById("player2").value;
+            game.takeTurn();
+        } else if (game.currentPlayer.pig.roll == 1 && this.currentPlayer === this.player2) {
+            this.currentPlayer = this.player1;
+            document.getElementById("current").innerHTML = document.getElementById("player1").value;
+            game.takeTurn();
+        }
+        else {
+            game.takeTurn();
+        }
         // if current player's turn is zero, need to switch players
         // and start new turn
     },
