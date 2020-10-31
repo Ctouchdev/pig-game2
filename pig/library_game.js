@@ -43,7 +43,15 @@ var game = {
     },
     takeTurn: function() {
         console.log('game takeTurn called');
-        game.currentPlayer.pig.takeTurn();
+
+        if (document.getElementById("hold").click()) {
+            game.hold();
+        } else {
+            game.currentPlayer.pig.takeTurn();
+        }
+        
+        
+        
         
         // use the Pig object of the currentPlayer property to take a turn
     },
@@ -58,11 +66,12 @@ var game = {
         document.getElementById('die').value = game.currentPlayer.pig.roll;
         console.log(this.currentPlayer.name.value);
         // display result of last roll in the currentPlayer display properties
-        if (game.currentPlayer.pig.roll == 1 && this.currentPlayer === this.player1) {
+       
+        if (game.currentPlayer.pig.turn == 0 && this.currentPlayer === this.player1) {
             this.currentPlayer = this.player2;
             document.getElementById("current").innerHTML = document.getElementById("player2").value;
             game.takeTurn();
-        } else if (game.currentPlayer.pig.roll == 1 && this.currentPlayer === this.player2) {
+        } else if (game.currentPlayer.pig.turn == 0 && this.currentPlayer === this.player2) {
             this.currentPlayer = this.player1;
             document.getElementById("current").innerHTML = document.getElementById("player1").value;
             game.takeTurn();
@@ -70,16 +79,38 @@ var game = {
         else {
             game.takeTurn();
         }
+
+        if (document.getElementById("hold").click()) {
+            game.hold();
+        }
         // if current player's turn is zero, need to switch players
         // and start new turn
     },
     hold: function() {
+        console.log('game hold function called');
         // use the currentPlayer Pig object to hold
-        
+        game.currentPlayer.pig.hold();
+
+        if (this.currentPlayer === this.player1) {
+            document.getElementById("total").value = game.player1.pig.total;
+            game.player1.pig.total = document.getElementById("score1").value;
+            game.changePlayer();
+        } else {
+            document.getElementById("total").value = game.player2.pig.total;
+            game.player2.pig.total = document.getElementById("score2").value;
+            game.changePlayer();
+        }
         // determine whether player1 or player1 are the current player, then
         // update that player's score with the current total
     },
     checkWinner: function() {
+        if (game.player1.pig.total >= 100) {
+           return document.getElementById("main-title").innerHTML = game.player1.name.value + ' is the winner!'
+        } else if (game.player2.pig.total >= 100) {
+            return document.getElementById("main-title").innerHTML = game.player2.name.value + ' is the winner!'
+        } else {
+            return 'none';
+        }
         // check the players' Pig objects to see if either is at or above 100
         // total points. If so, return that player's name. Otherwise, return 
         // the string "none".

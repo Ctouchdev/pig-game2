@@ -7,9 +7,11 @@ var newGame = function() {
 };
 var takeTurn = function() {
     game.takeTurn();
+    game.checkWinner();
 };
 var holdTurn = function() {
-  
+  game.hold();
+  game.checkWinner();
 };
 window.onload = function() {
     $("new_game").onclick = newGame;
